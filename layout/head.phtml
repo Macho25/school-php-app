@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>        
+        <nav>
+            <ul>
+                <li>
+                    <a href="/Webproject/index.php">Home</a>
+                </li>
+                <li>
+                    <a href="/Webproject/about_us.php">About us</a>
+                </li>
+                <?php 
+                    if(!isset($_SESSION["role"])){ ?>
+                <li>
+                    <a href="/Webproject/login.php">Login</a>
+                </li>
+                <?php } else { ?>
+                <li>
+                    <a href="/Webproject/addLanguage.php">Add a new laguage</a>
+                </li>   
+                
+                <li>
+                    <p>You are logged as <?php echo $_SESSION["username"]?></p>
+                </li>
+                <li>
+
+                    <form method="POST">
+                        <button name="logOutForm">Log out</button>
+                    </form>
+                </li>   
+                
+                <?php } if(isset($_POST["logOutForm"])){
+                            session_destroy();
+                        }
+                    ?>
+            </ul>
+        </nav>
+    </header>

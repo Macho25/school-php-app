@@ -39,7 +39,7 @@ function loginUser($db, $username, $password) {
         if (password_verify($password, $row["password_hash"])) {
             $_SESSION["user_id"] = $row["id"];
             $_SESSION["username"] = $row["username"];
-            $_SESSION["role"] = "signed";
+            $_SESSION["role"] = $row["role"];
             header("Location: /Webproject/index.php");
             return true;
         }

@@ -15,30 +15,50 @@
                 <li>
                     <a href="/Webproject/about_us.php">About us</a>
                 </li>
-                <?php 
-                    if(!isset($_SESSION["role"])){ ?>
                 <li>
-                    <a href="/Webproject/login.php">Login</a>
+                    <a href="/Webproject/languages.php">List of languages</a>
                 </li>
-                <?php } else { ?>
-                <li>
-                    <a href="/Webproject/addLanguage.php">Add a new laguage</a>
-                </li>   
-                
-                <li>
-                    <p>You are logged as <?php echo $_SESSION["username"]?></p>
-                </li>
-                <li>
 
-                    <form method="POST">
-                        <button name="logOutForm">Log out</button>
-                    </form>
-                </li>   
+                <?php  // after this statement add if its admin and then manage users, manage languages
+                        if(isset($_SESSION["role"])){ ?>
+                    <li>
+                        <a href="/Webproject/addLanguage.php">Add a new laguage</a>
+                    </li>   
+
+                <?php if($_SESSION["role"] === "admin"){  ?>
+                        
+                        <li>
+                            <a href="/Webproject/addLanguage.php">Edit languages</a>
+                        </li>   
+
+                        <li>
+                            <a href="/Webproject/addLanguage.php">Edit users</a>
+                        </li>   
+
+                 <?php }  ?>
+                    <li>
+                        <p>You are logged as <?php echo $_SESSION["username"]?></p>
+                    </li>
+                    <li>
+                    
+                        <form method="POST">
+                            <button name="logOutForm">Log out</button>
+                        </form>
+                    </li>   
                 
-                <?php } if(isset($_POST["logOutForm"])){
-                            session_destroy();
-                        }
-                    ?>
-            </ul>
+                <?php } else { ?>
+
+                    <li>
+                        <a href="/Webproject/login.php">Login</a>
+                    </li>
+
+                <?php } 
+                
+                
+                if(isset($_POST["logOutForm"])){
+                        session_destroy();
+                    }
+                ?>
+                </ul>
         </nav>
     </header>

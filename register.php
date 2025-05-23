@@ -8,7 +8,7 @@ require "./register.phtml";
 if(isset($_POST["registerForm"])){
     if($_POST["password"] === $_POST["passwordAgain"]){
         createUser($db, $_POST["username"], $_POST["password"], $_POST["email"]);
-        
+        echo "the account was created successfully";
     } else {
         echo "passwod are not same";
     }

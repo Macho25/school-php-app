@@ -1,0 +1,39 @@
+<h2>Add a New Programming Language</h2>
+<form method="POST">
+
+  <label for="name">Language Name:</label><br>
+  <input type="text" id="name" name="name" required><br><br>
+
+  <label for="purpose">Purpose:</label><br>
+  <textarea id="purpose" name="purpose" rows="3" required></textarea><br><br>
+
+  <label for="description">Description:</label><br>
+  <textarea id="description" name="description" rows="5" required></textarea><br><br>
+
+  <label for="type_systems[]">Type Systems:</label><br>
+  <select name="type_systems[]" id="type_systems" multiple required>
+  <?php printOptions($language_props["type_systems"]);?>
+  </select><br><br>
+
+  <label for="paradigms[]">Paradigms:</label><br>
+  <select name="paradigms[]" id="paradigms" multiple required>
+  <?php printOptions($language_props["paradigms"]);?>
+  </select><br><br>
+
+  <label for="tags[]">Tags:</label><br>
+  <select name="tags[]" id="tags" multiple>
+  <?php printOptions($language_props["tags"]);?>
+  </select><br><br>
+
+  <label for="version">Initial Version:</label><br>
+  <input type="text" id="version" name="version"><br><br>
+
+  <label for="release_year">Release Year:</label><br>
+  <input type="number" id="release_year" name="release_year" min="1950" max=<?=date("Y") ?>><br><br>
+
+  <label for="note">Note:</label><br>
+  <textarea id="note" name="note" rows="2"></textarea><br><br>
+
+  <button name="addLanguageSubmit" >Add Language</button>
+
+</form>

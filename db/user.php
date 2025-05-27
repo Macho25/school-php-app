@@ -40,10 +40,8 @@ function loginUser($db, $username, $password) {
             $_SESSION["user_id"] = $row["id"];
             $_SESSION["username"] = $row["username"];
             $_SESSION["role"] = $row["role"];
-            header("Location: /Webproject/index.php");
             return true;
         }
     }
-
     return false; 
 }

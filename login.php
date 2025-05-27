@@ -6,11 +6,15 @@ require "./db/user.php";
 require "./layout/head.phtml";
 require "./login.phtml";
 
-if(isset($_POST["loginForm"])){
+if(isset($_POST["loginSubmit"])){
     
     if(loginUser($db, $_POST["username"], $_POST["password"])){
+
+        header("Location: /Webproject/index.php");
         echo "You are in";
+
     } else {
+        
         echo "User does not exist";
 
     }

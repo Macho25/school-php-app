@@ -22,17 +22,17 @@
                 <?php  // after this statement add if its admin and then manage users, manage languages
                         if(isset($_SESSION["role"])){ ?>
                     <li>
-                        <a href="/Webproject/addLanguage.php">Add a new laguage</a>
+                        <a href="/Webproject/add_language.php">Add a new laguage</a>
                     </li>   
 
                 <?php if($_SESSION["role"] === "admin"){  ?>
                         
                         <li>
-                            <a href="/Webproject/addLanguage.php">Edit languages</a>
+                            <a href="/Webproject/edit_language.php">Edit languages</a>
                         </li>   
 
                         <li>
-                            <a href="/Webproject/addLanguage.php">Edit users</a>
+                            <a href="/Webproject/edit_user.php">Edit users</a>
                         </li>   
 
                  <?php }  ?>
@@ -57,6 +57,7 @@
                 
                 if(isset($_POST["logOutForm"])){
                         session_destroy();
+                        header("Location: /Webproject/index.php");
                     }
                 ?>
                 </ul>

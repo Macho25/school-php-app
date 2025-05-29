@@ -1,0 +1,91 @@
+<h2>List of languages</h2>
+<!-- <?php   $json = json_encode($languages, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    echo "<pre>$json</pre>";
+?> -->
+
+<table>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Purpose
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Tags
+        </th>
+        <th>
+            Paradigms
+        </th>
+        <th>
+            Type Systems
+        </th>
+        <?php if($_SESSION["role"] === "admin"){?>
+        <th>
+            Language ID
+        </th>
+        <th>
+            Creator ID
+        </th>
+        <th>
+            Active
+        </th>
+        <th>
+            Created At
+        </th>
+        <?php }?>
+    </tr>
+
+    <?php foreach($languages as $language){ ?>
+
+        <tr>
+
+            <td>
+                <?=$language["name"]?>
+            </td>
+            <td>
+                <?=$language["purpose"]?>
+            </td>
+            <td>
+                <?=$language["description"]?>
+            </td>
+            <td>
+                <?php foreach($language["tags"] as $tag){
+                    echo "$tag  ";
+                    }?>
+            </td>
+            <td>
+                <?php foreach($language["paradigms"] as $paradigm){
+                    echo "$paradigm  ";
+                    }?>
+            </td>
+            <td>
+                <?php foreach($language["type_systems"] as $type_system){
+                    echo "$type_system  ";
+                    }?>
+            </td>
+            <?php if($_SESSION["role"] === "admin"){?>
+            <td>
+                <?= $language["id"]?>
+            </td>
+
+            <td>
+                <?= $language["user_id"]?>
+            </td>
+
+            <td>
+                <?= $language["is_active"]?>
+            </td>
+
+            <td>
+                <?= $language["created_at"]?>
+            </td>
+            <?php }?>
+        </tr>
+
+    
+    <?php }?>
+</table>

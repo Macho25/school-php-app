@@ -4,6 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+
+        td {
+            max-width: 200px;
+            height: 30px;
+            padding: 0px 10px;
+            border: solid black;
+
+        }
+
+        table {
+            overflow: hidden;
+            border-collapse: collapse;
+        }
+
+
+
+    </style>
 </head>
 <body>
     <header>        
@@ -16,11 +34,11 @@
                     <a href="/Webproject/about_us.php">About us</a>
                 </li>
                 <li>
-                    <a href="/Webproject/languages.php">List of languages</a>
+                    <a href="/Webproject/view_languages.php">List of languages</a>
                 </li>
 
                 <?php  // after this statement add if its admin and then manage users, manage languages
-                        if(isset($_SESSION["role"])){ ?>
+                        if($_SESSION["role"] !== ""){ ?>
                     <li>
                         <a href="/Webproject/add_language.php">Add a new laguage</a>
                     </li>   

@@ -7,4 +7,7 @@ $languages = getAllLanguages($db);
 require "./layout/head.phtml";
 
 require "./view_languages.phtml";
+
+
+
 require "./layout/tail.phtml";

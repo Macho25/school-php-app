@@ -71,7 +71,7 @@ function addLanguageLinks($db, $sql, $language_id, $links){
     }
 }
 
-function insertToTable($db, $sql, $format, ...$values) {
+function actionToTable($db, $sql, $format, ...$values) {
     $stmt = mysqli_prepare($db, $sql);
     if (!$stmt) {
         die("Chyba při přípravě dotazu: " . mysqli_error($db));
@@ -89,7 +89,7 @@ function addLanguage($db, $name, $purpose,
                     ){
     $user_id = $_SESSION["user_id"];
 
-    insertToTable(
+    actionToTable(
         $db,
         "INSERT INTO languages (user_id, name, purpose, description) VALUES (?, ?, ?, ?)",
         "isss",
@@ -98,7 +98,7 @@ function addLanguage($db, $name, $purpose,
 
     $language_id = mysqli_insert_id($db);
 
-    insertToTable(
+    actionToTable(
         $db,
         "INSERT INTO language_versions (language_id, version, release_year, note) VALUES (?, ?, ?, ?)",
         "isis",
@@ -126,6 +126,62 @@ function addLanguage($db, $name, $purpose,
     
 
 }
+function updateLanguage($db, $name, $purpose,
+                    $description, $type_systems,
+                    $paradigms, $tags, $version, 
+                    $release_year, $note, $language_id
+                    ){
+    
+
+                        
+
+                        
+    actionToTable(
+        $db,
+        "UPDATE languages SET name = ?, purpose = ?, description = ? WHERE id = ?",
+        "sssi",
+        $name, $purpose, $description, $language_id
+    );
+
+
+    actionToTable(
+        $db,
+        "UPDATE language_versions SET version = ?, release_year = ?, note = ? WHERE language_id = ?",
+        "sisi",
+        $version, $release_year, $note, $language_id
+    );
+
+
+    actionToTable($db, "DELETE FROM language_paradigms WHERE language_id = ?", "i", $language_id);
+    addLanguageLinks($db, 
+        "INSERT INTO language_paradigms (language_id, paradigm_id) VALUES (?, ?)",
+        $language_id, 
+        $paradigms
+    );
+
+
+    actionToTable($db, "DELETE FROM language_tags WHERE language_id = ?", "i", $language_id);
+    addLanguageLinks($db, 
+        "INSERT INTO language_tags (language_id, tag_id) VALUES (?, ?)",
+        $language_id, 
+        $tags
+    );
+
+
+    actionToTable($db, "DELETE FROM language_type_systems WHERE language_id = ?", "i", $language_id);
+    addLanguageLinks($db, 
+        "INSERT INTO language_type_systems (language_id, type_system_id) VALUES (?, ?)",
+        $language_id, 
+        $type_systems
+    );
+
+
+}
+
+
+
+
+
 function getLanguageProperties($db, $tables){
     $language_props = [];
 
@@ -139,8 +195,64 @@ function getLanguageProperties($db, $tables){
     return $language_props;
 }
 
-function printOptions($options){    
+function printOptions($options, $selected = []){    
     foreach ($options as $option){
-    echo "<option value=\"{$option["id"]}\">{$option["name"]}</option>";
+        $is_selected = in_array((string)$option["id"], $selected) ? "selected" : "";
+        echo "<option value=\"{$option["id"]}\" $is_selected>{$option["name"]}</option>";
     }
 }
+
+
+
+function getLanguageById($db, $id){
+    $stmt = mysqli_prepare($db,  "SELECT * FROM languages WHERE id = ?");
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $language = mysqli_fetch_assoc($result);
+
+    if(!$language) return [];
+
+    $typeRes = mysqli_query($db, "SELECT type_system_id FROM language_type_systems WHERE language_id = $id");
+    $language["type_systems"] = [];
+    while($row = mysqli_fetch_assoc($typeRes)){
+        $language["type_systems"][] = $row["type_system_id"];
+    }
+
+    $paradigmRes = mysqli_query($db, "SELECT paradigm_id FROM language_paradigms WHERE language_id = $id");
+    $language["paradigms"] = [];
+    while($row = mysqli_fetch_assoc($paradigmRes)){
+        $language["paradigms"][] = $row["paradigm_id"];
+    }
+
+    $tagRes = mysqli_query($db, "SELECT tag_id FROM language_tags WHERE language_id = $id");
+    $language["tags"] = [];
+    while($row = mysqli_fetch_assoc($tagRes)){
+        $language["tags"][] = $row["tag_id"];
+    }
+
+    $versionRes = mysqli_query($db, "SELECT * FROM language_versions WHERE language_id = $id ORDER BY id ASC LIMIT 1");
+    $versionRow = mysqli_fetch_assoc($versionRes);
+    if($versionRow){
+        $language["version"] = $versionRow["version"];
+        $language["release_year"] = $versionRow["release_year"];
+        $language["note"] = $versionRow["note"];
+    }
+
+    return $language;
+}
+
+
+
+
+function deactiveLanguage($db, $language_id){
+    $result = mysqli_query($db, 
+    "UPDATE languages SET is_active = 0 WHERE id = $language_id"
+    );
+    if(!$result)
+        return false;
+    else
+        return true;
+}
+
+

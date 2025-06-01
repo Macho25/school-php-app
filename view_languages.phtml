@@ -1,6 +1,6 @@
 <h2>List of languages</h2>
 <!-- <?php   $json = json_encode($languages, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    echo "<pre>$json</pre>";
+    // echo "<pre>$json</pre>";
 ?> -->
 
 <table>
@@ -39,7 +39,11 @@
         <?php }?>
     </tr>
 
-    <?php foreach($languages as $language){ ?>
+    <?php foreach($languages as $language){ 
+            if (!isset($language["name"], $language["purpose"], $language["description"], $language["user_id"], $language["id"])) {
+            continue;
+        }
+        ?>
 
         <tr>
 
@@ -83,9 +87,38 @@
             <td>
                 <?= $language["created_at"]?>
             </td>
+            <?php } ?>
+            
+            <?php if(($_SESSION["user_id"] == 
+                $language["user_id"]) or $_SESSION["role"] === "admin") {?>
+            <td>
+                <a href="add_language.php?id=<?= $language["id"] ?>">Edit</a>
+            </td>
+            <td>
+                <form method="POST">
+                    <input type="hidden" name="language_id" value="<?= htmlspecialchars($language["id"] ?? "") ?>">
+                    <button name="DeleteLanguageSubmit">Delete</button>
+                </form>
+            </td>
+
             <?php }?>
         </tr>
 
     
     <?php }?>
 </table>
+
+
+<?php 
+
+if(isset($_POST["DeleteLanguageSubmit"])){
+    $result = deactiveLanguage($db, $_POST["language_id"]);
+    if($result)
+        echo "The language was successfully deleted";
+    else
+        echo "Cannot delete language";
+
+    header("Location: view_languages.php?success=1");
+
+}
+?>

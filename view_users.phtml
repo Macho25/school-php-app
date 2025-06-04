@@ -1,0 +1,85 @@
+<h2>List of users</h2>
+
+<table>
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Username
+        </th>
+        <th>
+            E-mail
+        </th>
+        <th>
+            Role
+        </th>
+        <th>
+            Is active
+        </th>
+        <th>
+            Created at
+        </th>
+    </tr>
+
+
+    <?php foreach($users as $user){ ?>
+        
+        <tr>
+            <td>
+                <?= $user["id"]?>
+            </td>
+            <td>
+                <?= $user["username"]?>
+            </td>
+            <td>
+                <?= $user["email"]?>
+            </td>
+            <td>
+                <?= $user["role"]?>
+            </td>
+            <td>
+                <?= $user["is_active"]?>
+            </td>
+            <td>
+                <?= $user["created_at"]?>
+            </td>
+
+            <td>
+                <form method="POST">
+                    <input type="hidden" name="user_id" value="<?= htmlspecialchars($user["id"] ?? "") ?>">
+                    <button name="setActiveUserSubmit">Active</button>
+                </form>
+            </td>
+            <td>
+                <form method="POST">
+                    <input type="hidden" name="user_id" value="<?= htmlspecialchars($user["id"] ?? "") ?>">
+                    <button name="setDeactiveUserSubmit">Deactive</button>
+                </form>
+            </td>
+
+        </tr>
+
+
+    <?php }?>
+</table>
+<?php
+if(isset($_POST["setDeactiveUserSubmit"])){
+
+    $result = deactiveUser($db, $_POST["user_id"]);
+    var_dump($result);
+    if($result)
+        echo "The user was successfully deactiveded";
+    else
+        echo "Cannot deactive the user";
+
+}
+if(isset($_POST["setActiveUserSubmit"])){
+    $result = setActiveUser($db, $_POST["user_id"]);
+    if($result)
+        echo "The user was successfully activeded";
+    else
+        echo "Cannot active the user";
+
+}
+?>

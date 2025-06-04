@@ -134,7 +134,7 @@ function updateLanguage($db, $name, $purpose,
     
 
                         
-
+// TODO improve this function to make more readable 
                         
     actionToTable(
         $db,
@@ -195,7 +195,7 @@ function getLanguageProperties($db, $tables){
     return $language_props;
 }
 
-function printOptions($options, $selected = []){    
+function printOptions($options, $selected = []){  
     foreach ($options as $option){
         $is_selected = in_array((string)$option["id"], $selected) ? "selected" : "";
         echo "<option value=\"{$option["id"]}\" $is_selected>{$option["name"]}</option>";
@@ -254,5 +254,16 @@ function deactiveLanguage($db, $language_id){
     else
         return true;
 }
+
+function setActiveLanguage($db, $language_id){
+    $result = mysqli_query($db, 
+    "UPDATE languages SET is_active = 1 WHERE id = $language_id"
+    );
+    if(!$result)
+        return false;
+    else
+        return true;
+}
+
 
 

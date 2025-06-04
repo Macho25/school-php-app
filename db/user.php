@@ -45,3 +45,38 @@ function loginUser($db, $username, $password) {
     }
     return false; 
 }
+
+
+function getUsers($db){
+    $stmt = mysqli_prepare($db,
+    "SELECT * FROM users"
+    );
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+
+function deactiveUser($db, $user_id){
+    $result = mysqli_query($db, 
+    "UPDATE users SET is_active = 0 WHERE id = $user_id"
+    );
+    if(!$result)
+        return false;
+    else
+        return true;
+
+}
+
+function setActiveUser($db, $user_id){
+    $result = mysqli_query($db, 
+    "UPDATE users SET is_active = 1 WHERE id = $user_id"
+    );
+    if(!$result)
+        return false;
+    else
+        return true;
+}
+
+
+

@@ -13,17 +13,17 @@
 
   <label for="type_systems[]">Type Systems:</label><br>
   <select name="type_systems[]" id="type_systems" multiple required>
-  <?php printOptions($language_props["type_systems"], $language["type_systems"]);?>
+  <?php printOptions($language_props["type_systems"], $language["type_systems"] ?? []); ?>
   </select><br><br>
   
   <label for="paradigms[]">Paradigms:</label><br>
   <select name="paradigms[]" id="paradigms" multiple required>
-  <?php printOptions($language_props["paradigms"], $language["paradigms"]);?>
+  <?php printOptions($language_props["paradigms"], $language["paradigms"] ?? []); ?>
   </select><br><br>
 
   <label for="tags[]">Tags:</label><br>
   <select name="tags[]" id="tags" multiple>
-  <?php printOptions($language_props["tags"], $language["tags"]); ?>
+  <?php printOptions($language_props["tags"], $language["tags"] ?? []); ?>
   </select><br><br>
 
   <label for="version">Initial Version:</label><br>
@@ -35,7 +35,7 @@
   <label for="note">Note:</label><br>
   <textarea id="note" name="note" rows="2"><?= htmlspecialchars($language["note"] ?? "") ?></textarea><br><br>
 
-  <?php if($edit){?>
+  <?php if(isset($edit) and $edit){?>
       <input type="hidden" name="language_id" value="<?= htmlspecialchars($language["id"] ?? "") ?>">
       <button name="updateLanguageSubmit">update Language</button>
 

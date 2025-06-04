@@ -5,8 +5,14 @@
 require "./utils/init.php";
 require "./db/language.php";
 require "./layout/head.phtml";
+
+if ($_SESSION["user_id"] === 0) {
+    header("Location: /WebProject/login.php");
+    exit();
+}
+
 $language_props = getLanguageProperties($db, ["type_systems", "paradigms", "tags"]);
-$edit = false;
+// $edit = false;
 
 if(isset($_GET["id"])){
     $language = getLanguageById($db, (int)$_GET["id"]);
@@ -16,9 +22,6 @@ if(isset($_GET["id"])){
         echo "Záznam nenalezen.";
     }   
     $edit = true;
-
-
-
 }
 require "./add_language.phtml";
 if(isset($_POST["addLanguageSubmit"])){

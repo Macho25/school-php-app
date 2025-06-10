@@ -7,7 +7,7 @@ $db = mysqli_connect(
         $dotenv['DB_PASS'],  
         $dotenv['DB_NAME']
     );
-if ($db === false) { 
+if($db === false){ 
     echo "<p>Failed to connect to databse.</p>";
     exit;
 }

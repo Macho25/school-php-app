@@ -12,7 +12,7 @@ if ($_SESSION["user_id"] === 0) {
 }
 
 $language_props = getLanguageProperties($db, ["type_systems", "paradigms", "tags"]);
-// $edit = false;
+$edit = false;
 
 if(isset($_GET["id"])){
     $language = getLanguageById($db, (int)$_GET["id"]);

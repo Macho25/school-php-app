@@ -1,20 +1,36 @@
 <h2>Login Page</h2>
 
-<form method="POST">
+<form method="POST" accept-charset="UTF-8">
 
     <div>
-        <label for="username">Username </label>
-        <input type="text" name="username" id="username" required>
+        <label for="username">Username</label>
+        <input
+            type="text"
+            name="username"
+            id="username"
+            required
+            maxlength="20"
+            pattern="^[^<>]+$"
+            title="Username must not contain the characters < or >"
+            value="<?= htmlspecialchars($username ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>"
+        >
     </div>
     
     <div>
-        <label for="password">Password </label>
-        <input type="password" name="password" id="password" required>
+        <label for="password">Password</label>
+        <input
+            type="password"
+            name="password"
+            id="password"
+            required
+            maxlength="20"
+            pattern="^[^<>]+$"
+            title="Password must not contain the characters < or >"
+        >
     </div>
     
     <button name="loginSubmit">Login</button>
 
 </form>
 
-
-<p>Don't have an account? Register here <a href="./register.php">Register</a></p>
+<p>Don't have an account yet? <a href="./register.php">Register here</a>.</p>

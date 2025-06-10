@@ -19,6 +19,14 @@
             border-collapse: collapse;
         }
 
+        body {
+            background-color: #202020;
+            color: white;
+        }
+
+        a {
+            color:#007bff;
+        }
 
 
     </style>
@@ -37,7 +45,7 @@
                     <a href="/Webproject/view_languages.php">List of languages</a>
                 </li>
 
-                <?php  // after this statement add if its admin and then manage users, manage languages
+                <?php 
                         if($_SESSION["role"] !== ""){ ?>
                     <li>
                         <a href="/Webproject/add_language.php">Add a new laguage</a>

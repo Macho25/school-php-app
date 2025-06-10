@@ -203,6 +203,14 @@ function printOptions($options, $selected = []){
 }
 
 
+function printOptionsFilters($options, $filters = []){  
+    foreach ($options as $option){
+        $is_selected = in_array((string)$option["id"], $filters) ? "selected" : "";
+        echo "<option value=\"{$option["id"]}\"  $is_selected>{$option["name"]} </option>";
+    }
+}
+
+
 
 function getLanguageById($db, $id){
     $stmt = mysqli_prepare($db,  "SELECT * FROM languages WHERE id = ?");
@@ -267,3 +275,47 @@ function setActiveLanguage($db, $language_id){
 
 
 
+function filterLanguage($selectedFilterIds,$languageProperties){
+     if(empty($selectedFilterIds)){
+        return false;
+    }
+    foreach($selectedFilterIds as $filter){
+        if(in_array($filter, $languageProperties)){
+            return false;
+        }
+    }
+    return true;
+}
+
+
+
+function shouldShowLanguage($language,$selectedFilters,$idToNameMap){
+    
+    foreach($selectedFilters as $category => $selectedIds){
+        if(empty($selectedIds)) continue;
+
+        $selectedNames = [];
+        foreach($selectedIds as $id){
+            $uniqueId = $category . '_' . $id;
+            if (isset($idToNameMap[$uniqueId])) {
+                $selectedNames[] = $idToNameMap[$uniqueId];
+            }
+        }
+        
+        $langProps = $language[$category] ?? [];
+        
+        $hasMatch = false;
+        foreach($selectedNames as $name){
+            if(in_array($name, $langProps)){
+                $hasMatch = true;
+                break;
+            }
+        }
+        
+        if(!$hasMatch){
+            return false;
+        }
+    }
+    
+    return true;
+}

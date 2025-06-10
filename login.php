@@ -4,7 +4,12 @@ require "./utils/init.php";
 require "./db/user.php";
 
 require "./layout/head.phtml";
+$username = $_POST["username"] ?? "";
+$email = $_POST["password"] ?? "";
+
 require "./login.phtml";
+
+
 
 if(isset($_POST["loginSubmit"])){
     

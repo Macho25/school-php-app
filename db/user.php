@@ -1,13 +1,13 @@
 <?php
 
-function createUser($db, $username, $password, $email) {
+function createUser($db, $username, $password, $email){
     $stmt = mysqli_prepare($db, "
         INSERT INTO users
         (username, email, password_hash)
         VALUES
         (?, ?, ?)
     ");
-    if ($stmt === false) {
+    if($stmt === false){
         echo "<p>Cannot create user</p>";
         echo "<p>" . mysqli_error($db) . "</p>";
         exit;
@@ -17,7 +17,7 @@ function createUser($db, $username, $password, $email) {
     mysqli_stmt_bind_param($stmt, "sss", $username, $email, $hashedPassword);
     $result = mysqli_execute($stmt);
 
-    if ($result === false) {
+    if($result === false){
         echo "<p>Cannot create user</p>";
         echo "<p>" . mysqli_error($db) . "</p>";
         exit;
@@ -25,7 +25,7 @@ function createUser($db, $username, $password, $email) {
 }
 
 
-function loginUser($db, $username, $password) {
+function loginUser($db, $username, $password){
     $stmt = mysqli_prepare($db, "
         SELECT id, username, password_hash, role
         FROM users
@@ -35,8 +35,8 @@ function loginUser($db, $username, $password) {
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     
-    if ($row = mysqli_fetch_assoc($result)) {
-        if (password_verify($password, $row["password_hash"])) {
+    if($row = mysqli_fetch_assoc($result)){
+        if(password_verify($password, $row["password_hash"])){
             $_SESSION["user_id"] = $row["id"];
             $_SESSION["username"] = $row["username"];
             $_SESSION["role"] = $row["role"];
@@ -76,6 +76,23 @@ function setActiveUser($db, $user_id){
         return false;
     else
         return true;
+}
+
+function isEmailAlreadyExists($db, $email){
+
+    $stmt = mysqli_prepare($db,
+    "SELECT email FROM users WHERE is_active = 1"
+    );
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $emails = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    foreach($emails as $existing_email){
+        if($existing_email["email"] === $email){
+            return true;
+        }
+
+    }
+    return false;
 }
 
 

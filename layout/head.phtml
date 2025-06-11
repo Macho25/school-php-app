@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pro Lang Hub</title>
     <style>
-
         td {
             max-width: 200px;
             height: 30px;
@@ -22,66 +22,156 @@
         body {
             background-color: #202020;
             color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
         }
 
         a {
-            color:#007bff;
+            color: #007bff;
+            border: solid black 2px;
+            border-radius: 5px;
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+        }
+
+        a:hover {
+            background-color: navy;
+            color: white;
+        }
+
+        nav {
+            justify-content: space-between;
+            display: flex;
+            margin: 40px;
+        }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 10px;
+            background-color: #111;
+            color: white;
+        }
+
+        .profile {
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .centered-text {
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 300px;
+            text-align: center;
+            padding: 0 200px;
+        }
+
+        button {
+            background: rgb(0, 28, 186);
+
+            color: white;
+        }
+
+        button:hover {
+            background: rgb(3, 41, 253);
+            color: black;
+        }
+
+        .filters {
+            display: flex;
+            flex-direction: row;
+
+        }
+
+        .filters>* {
+            padding: 10px;
         }
 
 
+        .button-size {
+            padding: 1px 10px;
+        }
+
+        .login {
+            justify-content: center;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .login>* {
+            font-size: 20px;
+        }
+
+        .better-button {
+            font-size: 15px;
+            padding: 0 15px;
+            margin: 10px
+        }
+
+        .form-group {
+            margin: 5px;
+
+        }
     </style>
 </head>
+
 <body>
-    <header>        
+    <header>
         <nav>
-            <ul>
-                <li>
-                    <a href="/Webproject/index.php">Home</a>
-                </li>
-                <li>
-                    <a href="/Webproject/about_us.php">About us</a>
-                </li>
-                <li>
-                    <a href="/Webproject/view_languages.php">List of languages</a>
-                </li>
 
-                <?php 
-                        if($_SESSION["role"] !== ""){ ?>
-                    <li>
-                        <a href="/Webproject/add_language.php">Add a new laguage</a>
-                    </li>   
+            <div>
+                <a href="/Webproject/index.php">Home</a>
+            </div>
+            <div>
+                <a href="/Webproject/about_us.php">About us</a>
+            </div>
+            <div>
+                <a href="/Webproject/view_languages.php">List of languages</a>
+            </div>
 
-                <?php if($_SESSION["role"] === "admin"){  ?>
+            <?php
+            if ($_SESSION["role"] !== "") { ?>
+                <div>
+                    <a href="/Webproject/add_language.php">Add a new laguage</a>
+                </div>
 
-                        <li>
-                            <a href="/Webproject/view_users.php">List of users</a>
-                        </li>   
+                <?php if ($_SESSION["role"] === "admin") {  ?>
 
-                 <?php }  ?>
-                    <li>
-                        <p>You are logged as <?php echo $_SESSION["username"]?></p>
-                    </li>
-                    <li>
-                    
-                        <form method="POST">
-                            <button name="logOutForm">Log out</button>
-                        </form>
-                    </li>   
-                
-                <?php } else { ?>
+                    <div>
+                        <a href="/Webproject/view_users.php">List of users</a>
+                    </div>
 
-                    <li>
-                        <a href="/Webproject/login.php">Login</a>
-                    </li>
+                <?php }  ?>
+                <div class="profile">
+                    <p>You are logged as <?php echo $_SESSION["username"] ?></p>
 
-                <?php } 
-                
-                
-                if(isset($_POST["logOutForm"])){
-                        session_destroy();
-                        header("Location: /Webproject/index.php");
-                    }
-                ?>
-                </ul>
+
+                    <form method="POST">
+                        <button name="logOutForm">Log out</button>
+                    </form>
+                </div>
+
+            <?php } else { ?>
+
+                <div>
+                    <a href="/Webproject/login.php">Login</a>
+                </div>
+
+            <?php }
+
+
+            if (isset($_POST["logOutForm"])) {
+                session_destroy();
+                header("Location: /Webproject/index.php");
+            }
+            ?>
+
         </nav>
     </header>

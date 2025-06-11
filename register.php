@@ -1,5 +1,5 @@
 <?php
-
+ob_start();
 require "./utils/init.php";
 
 require "./db/user.php";
@@ -22,8 +22,8 @@ if(isset($_POST["registerSubmit"])){
         $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
         $password = strip_tags(trim($_POST["password"]));
         createUser($db, $username, $password, $email);
-        header("Location: /Webproject/login.php");
         echo "Registration successful! Welcome, ".  htmlspecialchars($username);
+        header("Location: /Webproject/login.php");
 
     } else {
         
@@ -35,3 +35,4 @@ if(isset($_POST["registerSubmit"])){
 
 }
 require "./layout/tail.phtml";
+ob_end_flush();

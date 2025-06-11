@@ -17,7 +17,7 @@ $edit = false;
 if(isset($_GET["id"])){
     $language = getLanguageById($db, (int)$_GET["id"]);
     if($language){
-        echo "Jazyk: " . $language["name"];
+        
     } else {
         echo "Záznam nenalezen.";
     }   

@@ -1,56 +1,65 @@
-<h2>Add a New Programming Language</h2>
-<form method="POST" > 
+<?php if(isset($edit) and $edit){?>
+  <h2>Edit your Language</h2>
 
+  <?php } else {?>
+    
+    <h2 style="display: flex; justify-content: center;">Add a New Programming Language</h2>
 
-  <label for="name">Language Name:</label><br>
-  <input type="text" id="name" name="name" value="<?= htmlspecialchars($language["name"] ?? "") ?>" require
-         pattern="[A-Za-zÀ-ž\s\-]{1,50}"  maxlength="20" placeholder="Language name"
+<?php }?>
+<main class="login">
+  <form method="POST" >
   
-  ><br><br>
-
-  <label for="purpose">Purpose:</label><br>
-  <textarea id="purpose" name="purpose" rows="3" required
-            maxlength="200" rows="5" cols="40" placeholder="For personal stuff"
-  ><?= htmlspecialchars($language["purpose"] ?? "") ?></textarea><br><br>
-
-  <label for="description">Description:</label><br>
-  <textarea id="description" name="description" rows="5" required
-            maxlength="500" rows="5" cols="40" placeholder="Very efficient langauge"
-  ><?= htmlspecialchars($language["description"] ?? "") ?></textarea><br><br>
-
-  <label for="type_systems[]">Type Systems:</label><br>
-  <select name="type_systems[]" id="type_systems" multiple required>
-  <?php printOptions($language_props["type_systems"], $language["type_systems"] ?? []); ?>
-  </select><br><br>
   
-  <label for="paradigms[]">Paradigms:</label><br>
-  <select name="paradigms[]" id="paradigms" multiple required>
-  <?php printOptions($language_props["paradigms"], $language["paradigms"] ?? []); ?>
-  </select><br><br>
-
-  <label for="tags[]">Tags:</label><br>
-  <select name="tags[]" id="tags" multiple>
-  <?php printOptions($language_props["tags"], $language["tags"] ?? []); ?>
-  </select><br><br>
-
-  <label for="version">Initial Version:</label><br>
-  <input type="text" id="version" name="version" value="<?= htmlspecialchars($language["version"] ?? "") ?>" 
-        maxlength="30" pattern="[A-Za-zÀ-ž\s\-]{1,50}"
-  ><br><br>
-
-  <label for="release_year">Release Year:</label><br>
-  <input type="number" id="release_year" name="release_year" min="1950" max=<?=date("Y") ?> value="<?= htmlspecialchars($language["release_year"] ?? "") ?>"><br><br>
-
-  <label for="note">Note:</label><br>
-  <textarea id="note" name="note" rows="2"
-            maxlength="200" rows="5" cols="40" placeholder="How was your day?"
-  ><?= htmlspecialchars($language["note"] ?? "") ?></textarea><br><br>
-
-  <?php if(isset($edit) and $edit){?>
-      <input type="hidden" name="language_id" value="<?= htmlspecialchars($language["id"] ?? "") ?>">
-      <button name="updateLanguageSubmit">update Language</button>
-
-    <?php } else {?>
-      <button name="addLanguageSubmit">Add Language</button>
-    <?php }?>
-</form>
+    <label for="name">Language Name:</label><br>
+    <input type="text" id="name" name="name" value="<?= htmlspecialchars($language["name"] ?? "") ?>" require
+           pattern="[A-Za-zÀ-ž\s\-]{1,50}"  maxlength="20" placeholder="Language name"
+  
+    ><br><br>
+  
+    <label for="purpose">Purpose:</label><br>
+    <textarea id="purpose" name="purpose" rows="3" required
+              maxlength="200" rows="5" cols="40" placeholder="For personal stuff"
+    ><?= htmlspecialchars($language["purpose"] ?? "") ?></textarea><br><br>
+  
+    <label for="description">Description:</label><br>
+    <textarea id="description" name="description" rows="5" required
+              maxlength="500" rows="5" cols="40" placeholder="Very efficient langauge"
+    ><?= htmlspecialchars($language["description"] ?? "") ?></textarea><br><br>
+  
+    <label for="type_systems[]">Type Systems:</label><br>
+    <select name="type_systems[]" id="type_systems" multiple required>
+    <?php printOptions($language_props["type_systems"], $language["type_systems"] ?? []); ?>
+    </select><br><br>
+  
+    <label for="paradigms[]">Paradigms:</label><br>
+    <select name="paradigms[]" id="paradigms" multiple required>
+    <?php printOptions($language_props["paradigms"], $language["paradigms"] ?? []); ?>
+    </select><br><br>
+  
+    <label for="tags[]">Tags:</label><br>
+    <select name="tags[]" id="tags" multiple>
+    <?php printOptions($language_props["tags"], $language["tags"] ?? []); ?>
+    </select><br><br>
+  
+    <label for="version">Initial Version:</label><br>
+    <input type="text" id="version" name="version" value="<?= htmlspecialchars($language["version"] ?? "") ?>"
+          maxlength="30" pattern="[A-Za-zÀ-ž\s\-]{1,50}"
+    ><br><br>
+  
+    <label for="release_year">Release Year:</label><br>
+    <input type="number" id="release_year" name="release_year" min="1950" max=<?=date("Y") ?> value="<?= htmlspecialchars($language["release_year"] ?? "") ?>"><br><br>
+  
+    <label for="note">Note:</label><br>
+    <textarea id="note" name="note" rows="2"
+              maxlength="200" rows="5" cols="40" placeholder="How was your day?"
+    ><?= htmlspecialchars($language["note"] ?? "") ?></textarea><br><br>
+  
+    <?php if(isset($edit) and $edit){?>
+        <input type="hidden" name="language_id" value="<?= htmlspecialchars($language["id"] ?? "") ?>">
+        <button name="updateLanguageSubmit" class="better-button">update Language</button>
+  
+      <?php } else {?>
+        <button name="addLanguageSubmit" class="better-button">Add Language</button>
+      <?php }?>
+  </form>
+</main>

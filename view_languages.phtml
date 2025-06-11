@@ -1,8 +1,8 @@
-<h2>List of languages</h2>
-<h3>Filters</h3>
+<h2 style="display: flex; justify-content: center;">List of languages</h2>
+<h3 style="margin: 0;">Filters</h3>
 <form method="GET">
-
-    <div class="filters">
+<div class="filters">
+    <div>
         <label for="tags">Tags</label><br>
         <select name="tags[]" id="tags" multiple>
             <option disabled>Select tags</option>
@@ -10,7 +10,7 @@
         </select>
     </div>
 
-    <div class="filters">
+    <div>
         <label for="paradigms">Paradigms</label><br>
         <select name="paradigms[]" id="paradigms" multiple>
             <option disabled>Select paradigms</option>
@@ -18,16 +18,16 @@
         </select>
     </div>
 
-    <div class="filters">
+    <div>
         <label for="type_systems">Type systems</label><br>
         <select name="type_systems[]" id="type_systems" multiple>
             <option disabled>Select type systems</option>
             <?php printOptions($language_props["type_systems"], $_GET["type_systems"] ?? []); ?>
         </select>
     </div>
-
-    <button name="applyFilterForm">Apply Filters</button>
-     <a href="<?= $_SERVER['PHP_SELF'] ?>" class="reset-button">Reset Filters</a>
+</div>
+<button name="applyFilterForm">Apply Filters</button>
+<a href="<?= $_SERVER['PHP_SELF'] ?>" class="button-size">Reset Filters</a>
 </form>
 
 
@@ -55,109 +55,107 @@
         <th>
             Type Systems
         </th>
-        <?php if($_SESSION["role"] === "admin"){?>
-        <th>
-            Language ID
-        </th>
-        <th>
-            Creator ID
-        </th>
-        <th>
-            Active
-        </th>
-        <th>
-            Created At
-        </th>
-        <?php }?>
+        <?php if ($_SESSION["role"] === "admin") { ?>
+            <th>
+                Language ID
+            </th>
+            <th>
+                Creator ID
+            </th>
+            <th>
+                Active
+            </th>
+            <th>
+                Created At
+            </th>
+        <?php } ?>
     </tr>
 
 
 
-    <?php foreach($languages as $language){ 
-            if(!isset($language["name"], $language["purpose"], $language["description"], $language["user_id"], $language["id"])){
-                continue;
-        }
-        if(isset($_GET["applyFilterForm"])){
-        
-        $selected_filters = [
-            'tags' => $_GET['tags'] ?? [],
-            'paradigms' => $_GET['paradigms'] ?? [],
-            'type_systems' => $_GET['type_systems'] ?? []
-        ];
-        if(!shouldShowLanguage($language, $selected_filters, $id_to_name_map)){
+    <?php foreach ($languages as $language) {
+        if (!isset($language["name"], $language["purpose"], $language["description"], $language["user_id"], $language["id"])) {
             continue;
         }
-    }
-   
-    
-        ?>
+        if (isset($_GET["applyFilterForm"])) {
+
+            $selected_filters = [
+                'tags' => $_GET['tags'] ?? [],
+                'paradigms' => $_GET['paradigms'] ?? [],
+                'type_systems' => $_GET['type_systems'] ?? []
+            ];
+            if (!shouldShowLanguage($language, $selected_filters, $id_to_name_map)) {
+                continue;
+            }
+        }
+
+
+    ?>
         <tr>
 
             <td>
-                <?=$language["name"]?>
+                <?= $language["name"] ?>
             </td>
             <td>
-                <?=$language["purpose"]?>
+                <?= $language["purpose"] ?>
             </td>
             <td>
-                <?=$language["description"]?>
+                <?= $language["description"] ?>
             </td>
             <td>
-                <?php foreach($language["tags"] as $tag){
+                <?php foreach ($language["tags"] as $tag) {
                     echo $tag . "  ";
-                    }?>
+                } ?>
             </td>
             <td>
-                <?php foreach($language["paradigms"] as $paradigm){
+                <?php foreach ($language["paradigms"] as $paradigm) {
                     echo $paradigm . "  ";
-                    }?>
+                } ?>
             </td>
             <td>
-                <?php foreach($language["type_systems"] as $type_system){
+                <?php foreach ($language["type_systems"] as $type_system) {
                     echo $type_system . "  ";
-                    }?>
+                } ?>
             </td>
-            <?php if($_SESSION["role"] === "admin"){?>
-            <td>
-                <?= $language["id"]?>
-            </td>
+            <?php if ($_SESSION["role"] === "admin") { ?>
+                <td>
+                    <?= $language["id"] ?>
+                </td>
 
-            <td>
-                <?= $language["user_id"]?>
-            </td>
+                <td>
+                    <?= $language["user_id"] ?>
+                </td>
 
-            <td>
-                <?= $language["is_active"]?>
-            </td>
+                <td>
+                    <?= $language["is_active"] ?>
+                </td>
 
-            <td>
-                <?= $language["created_at"]?>
-            </td>
+                <td>
+                    <?= $language["created_at"] ?>
+                </td>
             <?php } ?>
-            
-            <?php if(($_SESSION["user_id"] == 
-                $language["user_id"]) or $_SESSION["role"] === "admin"){?>
-            <td>
-                <a href="add_language.php?id=<?= $language["id"] ?>">Edit</a>
-            </td>
-            <td>
-                <form method="POST">
-                    <input type="hidden" name="language_id" value="<?= htmlspecialchars($language["id"] ?? "") ?>">
-                    <button name="setActiveLanguageSubmit">Active</button>
-                </form>
-            </td>
-            <td>
-                <form method="POST">
-                    <input type="hidden" name="language_id" value="<?= htmlspecialchars($language["id"] ?? "") ?>">
-                    <button name="setDeactiveLanguageSubmit">Deactive</button>
-                </form>
-            </td>
-            
-            <?php }?>
+
+            <?php if (($_SESSION["user_id"] ==
+                $language["user_id"]) or $_SESSION["role"] === "admin") { ?>
+                <td>
+                    <a href="add_language.php?id=<?= $language["id"] ?>"class="button-size">Edit</a>
+                </td>
+                <td>
+                    <form method="POST">
+                        <input type="hidden" name="language_id" value="<?= htmlspecialchars($language["id"] ?? "") ?>">
+                        <button name="setActiveLanguageSubmit">Active</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="POST">
+                        <input type="hidden" name="language_id" value="<?= htmlspecialchars($language["id"] ?? "") ?>">
+                        <button name="setDeactiveLanguageSubmit">Deactive</button>
+                    </form>
+                </td>
+
+            <?php } ?>
         </tr>
 
-    
-    <?php }?>
+
+    <?php } ?>
 </table>
-
-

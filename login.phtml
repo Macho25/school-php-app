@@ -1,36 +1,38 @@
-<h2>Login Page</h2>
-
-<form method="POST" accept-charset="UTF-8">
-
-    <div>
-        <label for="username">Username</label>
-        <input
-            type="text"
-            name="username"
-            id="username"
-            required
-            maxlength="20"
-            pattern="^[^<>]+$"
-            title="Username must not contain the characters < or >"
-            value="<?= htmlspecialchars($username ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>"
-        >
-    </div>
+<main class="login">
     
-    <div>
-        <label for="password">Password</label>
-        <input
-            type="password"
-            name="password"
-            id="password"
-            required
-            maxlength="20"
-            pattern="^[^<>]+$"
-            title="Password must not contain the characters < or >"
-        >
-    </div>
+    <h2 style="margin-top: 100px; font-size: 30px;">Login Page</h2>
     
-    <button name="loginSubmit">Login</button>
-
-</form>
-
-<p>Don't have an account yet? <a href="./register.php">Register here</a>.</p>
+    <form method="POST" accept-charset="UTF-8">
+    
+        <div>
+            <label for="username">Username</label>
+            <input
+                type="text"
+                name="username"
+                id="username"
+                required
+                maxlength="20"
+                pattern="^[^<>]+$"
+                title="Username must not contain the characters < or >"
+                value="<?= htmlspecialchars($username ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">
+        </div>
+    
+        <div>
+            <label for="password">Password</label>
+            <input
+                type="password"
+                name="password"
+                id="password"
+                required
+                maxlength="20"
+                pattern="^[^<>]+$"
+                title="Password must not contain the characters < or >"
+            >
+        </div>
+    
+        <button name="loginSubmit" class="better-button">Login</button>
+    
+    </form>
+    
+    <p>Don't have an account yet? <a href="./register.php" class="button-size">Register here</a>.</p>
+</main>

@@ -16,7 +16,7 @@ if(isset($_POST["loginSubmit"])){
     
     if(loginUser($db, $_POST["username"], $_POST["password"])){
         
-        header("Location: /Webproject/index.php");
+        header("Location: ./index.php");
         echo "You are in";
 
     } else {

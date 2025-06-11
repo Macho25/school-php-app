@@ -23,7 +23,7 @@ if(isset($_POST["registerSubmit"])){
         $password = strip_tags(trim($_POST["password"]));
         createUser($db, $username, $password, $email);
         echo "Registration successful! Welcome, ".  htmlspecialchars($username);
-        header("Location: /Webproject/login.php");
+        header("Location: ./login.php");
 
     } else {
         
